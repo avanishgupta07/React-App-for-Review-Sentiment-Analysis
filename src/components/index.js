@@ -95,8 +95,9 @@ const restrautList =
                         "Positive"
                     ]
                 ]
-            }},
-            {
+            }
+        },
+        {
             "info": {
                 "review_id": "123459",
                 "reviewer_name": "Carole",
@@ -204,8 +205,9 @@ const restrautList =
                         "Positive"
                     ]
                 ]
-            }},
-            {
+            }
+        },
+        {
             "info": {
                 "review_id": "123457",
                 "reviewer_name": "Vladimir",
@@ -261,9 +263,10 @@ const restrautList =
                         "Negative"
                     ]
                 ]
-            }},
+            }
+        },
 
-            {
+        {
 
             "info": {
                 "review_id": "123455",
@@ -373,10 +376,11 @@ const restrautList =
                         705,
                         "Positive"
                     ]
-                ]}
+                ]
+            }
 
-            },
-            {
+        },
+        {
 
             "info": {
                 "review_id": "1234511",
@@ -454,65 +458,65 @@ const restrautList =
 
                 ]
             }
-            
+
         }
         ,
-    
+
     ]
-    const Body = () => {
-        return (
-            <div className="listname">
-                {restrautList.map((restaurant, index) => (
-                    <RestaurantCard key={index} restaurant={restaurant} />
-                ))}
-            </div>
-        );
+const Body = () => {
+    return (
+        <div className="listname">
+            {restrautList.map((restaurant, index) => (
+                <RestaurantCard key={index} restaurant={restaurant} />
+            ))}
+        </div>
+    );
+};
+const RestaurantCard = ({ restaurant }) => {
+    const info = restaurant.info;
+
+    if (!info) {
+        return null;
+    }
+
+    // Define colors for each sentiment
+    const sentimentColors = {
+        Positive: "#D9F2DD",
+        Negative: "#F2DBD9",
+        Mixed: "#e8bd6d3d",
+        Neutral: "#eaf09b6b"
     };
-    const RestaurantCard = ({ restaurant }) => {
-        const info = restaurant.info;
-    
-        if (!info) {
-            return null;
-        }
-    
-        // Define colors for each sentiment
-        const sentimentColors = {
-            Positive: "#D9F2DD",
-            Negative: "#F2DBD9",
-            Mixed: "#e8bd6d3d",
-            Neutral: "#eaf09b6b"
-        };
-    
-        return (
-            <div className="card" style={{ backgroundColor: sentimentColors[info.analytics[0].sentiment] }}>
-                <h2>{info.reviewer_name}</h2>
-                <h3>{info.date}</h3>
-                <p>{info.content}</p>
-                <p>{info.raw_content}</p>
-                <h3>Rating: {info.rating_review_score}/{info.out_of}</h3>
-                <h3>Source: {info.source.name}</h3>
-                <img src={info.source.icon} alt={info.source.name} />
-                <h3>Language: {info.source_language}</h3>
-                {info.analytics.map((analytics, index) => (
-                    <div key={index}>
-                        <h4>Category: {analytics.category}</h4>
-                        <h4>Topic: {analytics.topic}</h4>
-                        <p>Phrases: {analytics.phrases.join(", ")}</p>
-                        <p>Sentences: {analytics.sentences.join(", ")}</p>
-                        <p style={{ color: sentimentColors[analytics.sentiment] }}>Sentiment: {analytics.sentiment}</p>
-                        <p>
-                            Highlighted Sentences:
-                            {analytics.highlight_indices.map((indices, idx) => (
-                                <span key={idx}>
-                                    {indices[2]}: {info.raw_content.substring(indices[0], indices[1])}
-                                </span>
-                            ))}
-                        </p>
-                    </div>
-                ))}
-            </div>
-        );
-    };
+
+    return (
+        <div className="card" style={{ backgroundColor: sentimentColors[info.analytics[0].sentiment] }}>
+            <h2>{info.reviewer_name}</h2>
+            <h3>{info.date}</h3>
+            <p>{info.content}</p>
+            <p>{info.raw_content}</p>
+            <h3>Rating: {info.rating_review_score}/{info.out_of}</h3>
+            <h3>Source: {info.source.name}</h3>
+            <img src={info.source.icon} alt={info.source.name} />
+            <h3>Language: {info.source_language}</h3>
+            {info.analytics.map((analytics, index) => (
+                <div key={index}>
+                    <h4>Category: {analytics.category}</h4>
+                    <h4>Topic: {analytics.topic}</h4>
+                    <p>Phrases: {analytics.phrases.join(", ")}</p>
+                    <p>Sentences: {analytics.sentences.join(", ")}</p>
+                    <p style={{ color: sentimentColors[analytics.sentiment] }}>Sentiment: {analytics.sentiment}</p>
+                    <p>
+                        Highlighted Sentences:
+                        {analytics.highlight_indices.map((indices, idx) => (
+                            <span key={idx}>
+                                {indices[2]}: {info.raw_content.substring(indices[0], indices[1])}
+                            </span>
+                        ))}
+                    </p>
+                </div>
+            ))}
+        </div>
+    );
+};
 
 const Footer = () => {
     return <h4>Footer</h4>;
